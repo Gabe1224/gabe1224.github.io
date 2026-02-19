@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intel Sustainability Initiative</title>
+
+  <!-- Bootstrap CSS (Default LTR) -->
+  <link id="bootstrap-style"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .hero {
+      background-color: #0d6efd;
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .icon-box {
+      text-align: center;
+      padding: 30px;
+    }
+
+    .icon-box i {
+      font-size: 3rem;
+      color: #0d6efd;
+      margin-bottom: 15px;
+    }
+
+    .newsletter-section {
+      background-color: white;
+      padding: 50px 20px;
+      margin-top: 40px;
+    }
+
+    footer {
+      background-color: #212529;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    /* Accessibility Focus Styling */
+    a:focus, button:focus, input:focus {
+      outline: 3px solid #ffbf47;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Language Toggle -->
+<div class="container text-end mt-3">
+  <button id="langToggle"
+          class="btn btn-outline-primary btn-sm"
+          aria-label="Switch language">
+    Switch to Arabic / التبديل إلى العربية
+  </button>
+</div>
+
+<!-- Hero Section -->
+<header class="hero" role="banner">
+  <h1 id="hero-title" class="fw-bold">
+    Sustainability at Intel
+  </h1>
+  <p id="hero-text" class="lead">
+    Building a more responsible and sustainable future together.
+  </p>
+</header>
+
+<!-- Features Section -->
+<section class="container mt-5" aria-labelledby="features-heading">
+  <h2 id="features-heading" class="text-center mb-4">
+    Our Sustainability Focus
+  </h2>
+
+  <div class="row text-center">
+
+    <div class="col-md-4 icon-box">
+      <i class="bi bi-globe2" aria-hidden="true"></i>
+      <h3 id="feature1-title">Global Impact</h3>
+      <p id="feature1-text">
+        Driving positive change across international communities and markets.
+      </p>
+    </div>
+
+    <div class="col-md-4 icon-box">
+      <i class="bi bi-lightning-charge" aria-hidden="true"></i>
+      <h3 id="feature2-title">Energy Efficiency</h3>
+      <p id="feature2-text">
+        Innovating with energy-smart technologies to reduce environmental impact.
+      </p>
+    </div>
+
+    <div class="col-md-4 icon-box">
+      <i class="bi bi-people" aria-hidden="true"></i>
+      <h3 id="feature3-title">Inclusive Design</h3>
+      <p id="feature3-text">
+        Ensuring accessibility and inclusion for users of all abilities worldwide.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Newsletter Form -->
+<section class="newsletter-section" aria-labelledby="newsletter-heading">
+  <div class="container">
+    <h2 id="newsletter-heading" class="text-center mb-4">
+      Subscribe to Our Sustainability Newsletter
+    </h2>
+
+    <form class="row g-3 justify-content-center" novalidate>
+
+      <div class="col-md-5">
+        <label for="name" id="label-name" class="form-label">
+          Full Name
+        </label>
+        <input type="text"
+               class="form-control"
+               id="name"
+               required
+               aria-required="true">
+      </div>
+
+      <div class="col-md-5">
+        <label for="email" id="label-email" class="form-label">
+          Email Address
+        </label>
+        <input type="email"
+               class="form-control"
+               id="email"
+               required
+               aria-required="true">
+      </div>
+
+      <div class="col-12 text-center">
+        <button type="submit"
+                id="subscribe-btn"
+                class="btn btn-primary btn-lg">
+          Subscribe
+        </button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<footer role="contentinfo">
+  © 2026 Intel Sustainability Initiative
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+const translations = {
+  en: {
+    dir: "ltr",
+    heroTitle: "Sustainability at Intel",
+    heroText: "Building a more responsible and sustainable future together.",
+    featuresHeading: "Our Sustainability Focus",
+    f1Title: "Global Impact",
+    f1Text: "Driving positive change across international communities and markets.",
+    f2Title: "Energy Efficiency",
+    f2Text: "Innovating with energy-smart technologies to reduce environmental impact.",
+    f3Title: "Inclusive Design",
+    f3Text: "Ensuring accessibility and inclusion for users of all abilities worldwide.",
+    newsletter: "Subscribe to Our Sustainability Newsletter",
+    nameLabel: "Full Name",
+    emailLabel: "Email Address",
+    subscribe: "Subscribe",
+    toggle: "Switch to Arabic / التبديل إلى العربية"
+  },
+  ar: {
+    dir: "rtl",
+    heroTitle: "الاستدامة في إنتل",
+    heroText: "نبني مستقبلًا أكثر مسؤولية واستدامة معًا.",
+    featuresHeading: "تركيزنا على الاستدامة",
+    f1Title: "التأثير العالمي",
+    f1Text: "قيادة التغيير الإيجابي عبر المجتمعات والأسواق الدولية.",
+    f2Title: "كفاءة الطاقة",
+    f2Text: "الابتكار بتقنيات ذكية لتقليل التأثير البيئي.",
+    f3Title: "تصميم شامل",
+    f3Text: "ضمان إمكانية الوصول والشمول لجميع المستخدمين.",
+    newsletter: "اشترك في نشرتنا الإخبارية للاستدامة",
+    nameLabel: "الاسم الكامل",
+    emailLabel: "البريد الإلكتروني",
+    subscribe: "اشترك الآن",
+    toggle: "Switch to English"
+  }
+};
+
+let currentLang = "en";
+
+document.getElementById("langToggle").addEventListener("click", () => {
+  currentLang = currentLang === "en" ? "ar" : "en";
+  const t = translations[currentLang];
+
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = t.dir;
+
+  document.getElementById("bootstrap-style").href =
+    currentLang === "ar"
+      ? "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css"
+      : "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css";
+
+  document.getElementById("hero-title").textContent = t.heroTitle;
+  document.getElementById("hero-text").textContent = t.heroText;
+  document.getElementById("features-heading").textContent = t.featuresHeading;
+  document.getElementById("feature1-title").textContent = t.f1Title;
+  document.getElementById("feature1-text").textContent = t.f1Text;
+  document.getElementById("feature2-title").textContent = t.f2Title;
+  document.getElementById("feature2-text").textContent = t.f2Text;
+  document.getElementById("feature3-title").textContent = t.f3Title;
+  document.getElementById("feature3-text").textContent = t.f3Text;
+  document.getElementById("newsletter-heading").textContent = t.newsletter;
+  document.getElementById("label-name").textContent = t.nameLabel;
+  document.getElementById("label-email").textContent = t.emailLabel;
+  document.getElementById("subscribe-btn").textContent = t.subscribe;
+  document.getElementById("langToggle").textContent = t.toggle;
+});
+</script>
+
+</body>
+</html>
