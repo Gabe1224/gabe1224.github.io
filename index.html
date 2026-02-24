@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intel Sustainability Summit Check-In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0071c5, #00a3e0);
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    input, select, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #0071c5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #005a9e;
+    }
+
+    .teams {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .team-card {
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      background: #f4f4f4;
+      transition: 0.3s;
+    }
+
+    .leader {
+      background-color: #d4edda;
+      border: 2px solid #28a745;
+      font-weight: bold;
+    }
+
+    .attendees {
+      margin-top: 20px;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🌱 Intel Sustainability Summit Check-In</h1>
+
+  <div class="container">
+    <form id="checkInForm">
+      <input type="text" id="name" placeholder="Enter your name" required>
+
+      <select id="team" required>
+        <option value="">Select your team</option>
+        <option value="water">Team Water Wise</option>
+        <option value="netzero">Team Net Zero</option>
+        <option value="renewables">Team Renewables</option>
+      </select>
+
+      <button type="submit">Check In</button>
+    </form>
+
+    <div class="teams">
+      <div id="waterCard" class="team-card">
+        💧 Team Water Wise  
+        <p id="waterCount">0</p>
+      </div>
+
+      <div id="netzeroCard" class="team-card">
+        🌍 Team Net Zero  
+        <p id="netzeroCount">0</p>
+      </div>
+
+      <div id="renewablesCard" class="team-card">
+        ☀️ Team Renewables  
+        <p id="renewablesCount">0</p>
+      </div>
+    </div>
+
+    <div class="attendees">
+      <h3>Checked-In Employees:</h3>
+      <ul id="attendeeList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("checkInForm");
+    const attendeeList = document.getElementById("attendeeList");
+
+    const counts = {
+      water: 0,
+      netzero: 0,
+      renewables: 0
+    };
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const team = document.getElementById("team").value;
+
+      if (!name || !team) {
+        alert("Please enter your name and select a team.");
+        return;
+      }
+
+      counts[team]++;
+
+      document.getElementById(team + "Count").textContent = counts[team];
+
+      const li = document.createElement("li");
+      li.textContent = name + " - " + getTeamName(team);
+      attendeeList.appendChild(li);
+
+      highlightLeader();
+
+      form.reset();
+    });
+
+    function getTeamName(team) {
+      if (team === "water") return "Team Water Wise";
+      if (team === "netzero") return "Team Net Zero";
+      if (team === "renewables") return "Team Renewables";
+    }
+
+    function highlightLeader() {
+      const max = Math.max(counts.water, counts.netzero, counts.renewables);
+
+      document.getElementById("waterCard").classList.remove("leader");
+      document.getElementById("netzeroCard").classList.remove("leader");
+      document.getElementById("renewablesCard").classList.remove("leader");
+
+      if (counts.water === max && max !== 0)
+        document.getElementById("waterCard").classList.add("leader");
+
+      if (counts.netzero === max && max !== 0)
+        document.getElementById("netzeroCard").classList.add("leader");
+
+      if (counts.renewables === max && max !== 0)
+        document.getElementById("renewablesCard").classList.add("leader");
+    }
+  </script>
+
+</body>
+</html>
