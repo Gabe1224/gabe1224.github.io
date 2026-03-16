@@ -1,0 +1,40 @@
+body{
+font-family: Arial;
+text-align:center;
+background:#f4f4f4;
+}
+
+h1{
+color:#ffc907;
+}
+
+#gameArea{
+width:400px;
+height:500px;
+background:white;
+border:3px solid black;
+margin:20px auto;
+position:relative;
+overflow:hidden;
+}
+
+.drop{
+width:40px;
+height:40px;
+border-radius:50%;
+position:absolute;
+cursor:pointer;
+}
+
+.clean{
+background:#00aaff;
+}
+
+.bad{
+background:red;
+}
+
+#score{
+font-size:22px;
+margin-top:10px;
+}
