@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NASA Space Explorer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0f1a;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      background: #1d4ed8;
+      color: white;
+      cursor: pointer;
+    }
+
+    #loading, #message {
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    #message {
+      color: #fca5a5;
+    }
+
+    #gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #111827;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      padding-bottom: 10px;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card h3, .card p {
+      padding: 0 10px;
+    }
+
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #111827;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: 10px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .modal-box img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      margin-bottom: 15px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>NASA Space Explorer</h1>
+
+  <div class="controls">
+    <input type="date" id="startDate">
+    <input type="date" id="endDate">
+    <button id="getImages">Get Space Images</button>
+  </div>
+
+  <div id="loading"></div>
+  <div id="message"></div>
+  <div id="gallery"></div>
+
+  <div id="modal">
+    <div class="modal-box">
+      <span class="close" id="closeModal">&times;</span>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const apiKey = "DEMO_KEY"; // replace with your real NASA API key
+    const gallery = document.getElementById("gallery");
+    const loading = document.getElementById("loading");
+    const message = document.getElementById("message");
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modalContent");
+
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function setDefaultDates() {
+      const end = new Date();
+      const start = new Date();
+      start.setDate(end.getDate() - 8);
+
+      document.getElementById("startDate").value = formatDate(start);
+      document.getElementById("endDate").value = formatDate(end);
+    }
+
+    async function getImages() {
+      const startDate = document.getElementById("startDate").value;
+      const endDate = document.getElementById("endDate").value;
+
+      gallery.innerHTML = "";
+      message.textContent = "";
+
+      if (!startDate || !endDate) {
+        message.textContent = "Please choose both dates.";
+        return;
+      }
+
+      const start = new Date(startDate + "T00:00:00");
+      const end = new Date(endDate + "T00:00:00");
+      const days = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+      if (start > end) {
+        message.textContent = "Start date must be before end date.";
+        return;
+      }
+
+      if (days !== 9) {
+        message.textContent = "Please choose exactly 9 days.";
+        return;
+      }
+
+      loading.textContent = "Loading...";
+
+      try {
+        const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${startDate}&end_date=${endDate}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        console.log(data);
+
+        if (!response.ok) {
+          message.textContent = data.msg || "API request failed.";
+          loading.textContent = "";
+          return;
+        }
+
+        data.reverse().forEach(item => {
+          const card = document.createElement("div");
+          card.className = "card";
+
+          if (item.media_type === "image") {
+            card.innerHTML = `
+              <img src="${item.url}" alt="${item.title}">
+              <h3>${item.title}</h3>
+              <p>${item.date}</p>
+            `;
+            card.addEventListener("click", () => openModal(item));
+            gallery.appendChild(card);
+          }
+        });
+
+        if (gallery.innerHTML === "") {
+          message.textContent = "No image entries found for these dates.";
+        }
+      } catch (error) {
+        message.textContent = "Something went wrong. Check your API key and internet connection.";
+        console.error(error);
+      }
+
+      loading.textContent = "";
+    }
+
+    function openModal(item) {
+      modalContent.innerHTML = `
+        <img src="${item.hdurl || item.url}" alt="${item.title}">
+        <h2>${item.title}</h2>
+        <p>${item.date}</p>
+        <p>${item.explanation}</p>
+      `;
+      modal.style.display = "flex";
+    }
+
+    document.getElementById("getImages").addEventListener("click", getImages);
+
+    document.getElementById("closeModal").addEventListener("click", () => {
+      modal.style.display = "none";
+      modalContent.innerHTML = "";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+        modalContent.innerHTML = "";
+      }
+    });
+
+    setDefaultDates();
+  </script>
+</body>
+</html>
