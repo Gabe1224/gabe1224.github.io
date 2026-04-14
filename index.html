@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>L'Oréal Smart Routine Builder</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<header class="hero">
+  <h1>L'Oréal Smart Routine Builder</h1>
+  <p>Build a personalized routine with AI-style recommendations</p>
+</header>
+
+<main class="container">
+
+  <!-- INPUT -->
+  <section class="panel">
+    <h2>Your Goal</h2>
+
+    <div class="tags">
+      <button class="tag" data="dry skin">Dry Skin</button>
+      <button class="tag" data="oily skin">Oily Skin</button>
+      <button class="tag" data="damaged hair">Damaged Hair</button>
+      <button class="tag" data="frizz">Frizz</button>
+    </div>
+
+    <textarea id="input" placeholder="Example: routine for dry skin"></textarea>
+
+    <div class="actions">
+      <button id="build">Build Routine</button>
+      <button id="clear" class="secondary">Clear</button>
+    </div>
+
+    <p id="response">Your results will appear here.</p>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="panel">
+    <h2>Products</h2>
+    <div id="grid" class="grid"></div>
+  </section>
+
+  <!-- ROUTINE -->
+  <section class="panel">
+    <h2>Your Routine</h2>
+    <div id="routine"></div>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <span id="close">&times;</span>
+    <img id="mImg">
+    <h3 id="mTitle"></h3>
+    <p id="mDesc"></p>
+    <button id="addModal">Add to Routine</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
